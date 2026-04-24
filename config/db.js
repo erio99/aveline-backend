@@ -1,6 +1,5 @@
 import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
-
 dotenv.config();
 
 const pool = mysql.createPool({
@@ -14,17 +13,14 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
-// ✅ Ne bloque pas le démarrage si MySQL est down
-const testConnection = async () => {
+export const testConnection = async () => {
   try {
     const conn = await pool.getConnection();
     console.log('✅ MySQL connecté');
     conn.release();
   } catch (error) {
-    console.warn('⚠️ MySQL non disponible - serveur continue');
-    console.warn('Message:', error.message);
+    console.warn('⚠️ MySQL non disponible:', error.message);
   }
 };
 
-export { pool, testConnection };
 export default pool;
