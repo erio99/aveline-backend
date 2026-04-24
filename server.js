@@ -29,3 +29,11 @@ app.use('/api/*', (req, res) => {
 
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log(`🚀 Port ${PORT}`));
+
+process.on('uncaughtException', (err) => {
+  console.error('❌ Erreur non catchée:', err);
+});
+
+process.on('unhandledRejection', (reason) => {
+  console.error('❌ Promesse rejetée:', reason);
+});
